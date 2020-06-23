@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- bootstrap template from https://getbootstrap.com/docs/4.0/getting-started/introduction/-->
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="interface.css">
+
+    <title>Add Foods</title>
+</head>
+<body>
+
+            <div class="container">
+                <div class="card m-4">
+                    <div class="card-header">
+                        <legend>Add/Edit a Food</legend>
+                    </div>
+
+
+                <div class="card-body">
+
+                    <form id="addFoodForm" >
+                        <p>{{noResultReturned}}</p>
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-5">Name</label>
+
+                            <div class="col-sm-7">
+                                <input type="text" required="yes" class="form-control" id="name" name="name" maxlength="255" value="{{name}}"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="servingSize" class="col-sm-5">Serving Size (1 - 1,000)</label>
+                            <div class="col-sm-7">
+                                <input type="number" required="yes" class="form-control" id="servingSize" name="servingSize" min="1" max="1000" value="{{servingSize}}" step="1"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="servingSizeUnits" class="col-sm-5">Serving Size Units</label>
+                            <div class="col-sm-7">
+                                <input type="text" required="yes" class="form-control" id="servingSizeUnits" name="servingSizeUnits" maxlength="255" value="{{servingSizeUnits}}"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <label for="calories" class="col-sm-5">Calories</label>
+                            <div class="col-sm-7">
+                                <input type="number" required="yes" class="form-control" id="calories" name="calories" min="1" max="2000" step="1" value="{{calories}}"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <label for="specialDietID" class="col-sm-5">Special Diet?</label>
+                            <div class="col-sm-7">
+                                <select name="specialDietID" id="specialDietMenu">
+                                    <option value="None" "">None</option>
+                                    <option value="Vegan" "">Vegan</option>
+                                    <option value="Vegetarian" "">Vegetarian</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button id="addFoodBtn" type="submit" name="addFood" class="btn btn-outline-primary">Submit</button>
+                        <a id="cancelAddFood" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="foodAdd.js"></script>
+    </body>
+</html>

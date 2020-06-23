@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Calorie Tracker Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="interface.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <script src="interfaceScripts.js"></script>
+</head>
+
+<body>
+
+
+  <div class="container">
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+      <h1 class="display-4">
+        <div id="userHome">
+        Hi {{user.firstName}}
+
+        <button id="switchUserBtn" type="button" class='btn btn-outline-primary '>Switch User</button>
+        </div>
+      </h1>
+
+      <p style="display: none;" id="userID">{{userID}}</p>
+      <p class="lead">Here's your fitness and nutrition tracking at a glance:</p>
+    </div>
+  </div>
+
+
+
+  <div class="container" >
+    <div class="row">
+      <div class="col-md-12">
+        <div class="container">
+          <div class="card-deck">
+            <div class="card mb-4 box-shadow">
+              <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Today's Calories</h4>
+              </div>
+              <div class="card-body">
+                <h2 id="calorieReadout" class="card-title pricing-card-title"></h2>
+                <div class="progress" style="height:50px">
+                   <div id="calProgress" class="progress-bar progress-bar-striped bg-success" style="width:1%">
+                   </div>
+                  </div>
+                  <ul class="list-group" id="logList" style="display:none">
+                    <li class="list-group-item">Grilled Cheese Sandwhich</li>
+                    <li class="list-group-item">Hamburger</li>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="container">
+          <div class="card-deck">
+            <div class="card mb-4 box-shadow" id="logCard">
+              <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Activity Log</h4>
+              </div>
+              <div class="card-body">
+                <ul class="list-unstyled mt-3 mb-4">
+                  <div class="table table-hover overflow-auto" style="max-height: 350px;">
+                    <table id="logTable" class="table table-striped table-sm">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Class</th>
+                          <th>Duration</th>
+                          <th>Servings</th>
+                          <th>Meal</th>
+                          <th>Calories</th>
+                          <th>Name</th>
+                        </tr>
+                      </thead>
+                      <tbody id="logTableBody">
+                        <tr>{{noActivityData}}</tr>
+                        {{#each logItems}}
+                        <tr id="logRow{{logID}}" class="logTableRow">
+                          <td>{{date}}</td>
+                          <td>{{class}}</td>
+                          <td>{{duration}}</td>
+                          <td>{{servings}}</td>
+                          <td>{{meal}}</td>
+                          <td>{{calories}}</td>
+                          <td>{{name}}</td>
+                          <td id="logRow1ID" style="display:none">{{logID}}</td>
+                        </tr>
+                        {{/each}}
+
+                      </tbody>
+                    </table>
+
+                  </div>
+                </ul>
+                <a href="/foodLogForm" type="button" id="logFood" class="btn btn-outline-primary">Log Food</a>
+                <a href="/exLogForm" type="button" id="logExercise" class="btn btn-outline-primary">Log Exercise</a>
+                <button onclick="" data-toggle ="modal" data-target="#deleteLogModal" type="button" id="delLogButton" class="btn btn-outline-danger">Delete</button>
+
+                <div class="modal fade" id="deleteLogModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure you want to delete this item from the food log?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" onclick="removeFromLog()" data-dismiss="modal" class="btn btn-danger">Delete</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+    <div class="row">
+      <div class="col-md">
+        <div class="container">
+          <div class="card-deck" id="centerDeck">
+            <div class="card mb-4 box-shadow">
+              <div class="card-header">
+                <nav class="navbar navbar-light bg-light" id="cookbookSearch">
+                </nav>
+                <h4 id="cookBookTableTitle" class="my-0 font-weight-normal">Food & Exercise Table</h4>
+              </div>
+              <div class="card-body" id="FoodAnExcerciseWindow">
+
+                <form class="form-inline" id="searchForm">
+                  <input id="searchText" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                  <button type="button" id="searchButton" class="btn btn-outline-success">Search</button>
+                </form>
+
+<div class="table table-responsive overflow-auto" style="max-height: 350px;">
+
+                <table class="table table-striped table-inverse" id="totalList" >
+                  <thead class="thead-inverse">
+                    <tr>
+                      <th>Name</th>
+                      <th>Serving Size / Duration</th>
+                      <th>Units</th>
+                      <th>Calories</th>
+                      <th>Special Diet</th>
+                    </tr>
+                    </thead>
+                    <tbody id="foodTableRows">
+                      <tr>{{noFoodsAndExercises}}</tr>
+
+                      {{#each foodsAndExercises}}
+                      <tr id="foodExRow{{ID}}">
+                        <td>{{name}}</td>
+                        <td>{{servingDuration}}</td>
+                        <td>{{units}}</td>
+                        <td>{{calories}}</td>
+                        <td>{{specialDietID}}</td>
+                        <td style="display: none;">{{class}}</td>
+                        <td style="display: none;">{{ID}}</td>
+                      </tr>
+                      {{/each}}
+
+                    </tbody>
+                </table>
+</div>
+
+                <button id="editCookBookItem" onclick="editCookBookItem()" type="button" class="btn btn-outline-primary">Edit Entry</button>
+                <button id="newCookBookItem" onclick="addToCookBookFood()" type="button" class="btn btn-outline-primary">Add a Food</button>
+                <button id="newCookBookItem" onclick="addToCookBookExcercise()" type="button" class="btn btn-outline-primary">Add an Exercise</button>
+                <button data-toggle ="modal" data-target="#catalogDeleteModal" id="deleteCookBookItem" type="button" id="delFoodButton" class="btn btn-outline-danger">Delete</button>
+
+
+                <div class="modal fade" id="catalogDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure you want to delete this item from the database?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" onclick="removeFromCookBook()" data-dismiss="modal" class="btn btn-danger">Delete</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md" style="max-height: 350px">
+        <div class="container">
+          <div class="card mb-4 box-shadow">
+            <div class="card-header">
+              <h4 class="my-0 font-weight-normal">Weight Log</h4>
+            </div>
+            <div class="card-body">
+
+              <h4 id="weightReadout" class="card-title pricing-card-title"> </h4>
+
+              <canvas id="weightChart"></canvas>
+
+              <div class="container">
+
+                <div class="row md-12" >
+                  <div class="col-sm-8" >
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <button id="addWeightButton" onclick="addWeight()" class="btn btn-outline-success" type="button">Log Weight</button>
+                      </div>
+                      <input id="weightInputBox" class="form-control" type="number" placeholder="Enter Weight">
+                    </div>
+                  </div>
+                    <div class="col-sm-4">
+                      <button id="deleteWeightButton" type="button" onclick="weightChartDelete()"  data-dismiss="modal" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+
+                  <div class="row md-12" >
+                    <div class="col-sm-8" >
+                      <input id="weightDateInputBox" class="form-control" type="date">
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
+<footer>
+</footer>

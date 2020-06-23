@@ -1,0 +1,81 @@
+
+body
+{
+  background: linear-gradient(0deg, #cfd9df 0%, #e2ebf0 100%)
+
+}
+
+#FoodAnExcerciseWindow
+{
+
+}
+
+@media (min-width: 1500px)
+{
+    .container
+    {
+        max-width: 1500px;
+    }
+}
+
+/* #centralStack
+{
+  display: table-cell;
+vertical-align: middle;
+    display: inline-block;
+} */
+
+/*
+#centerDeck
+{
+  display: table-cell;
+vertical-align: middle;
+    display: inline-block;
+} */
+
+#searchForm
+{
+  margin-bottom: 10px
+}
+
+#cookBookRow
+{
+  height: inherit;
+}
+
+#weightDateInputBox
+{
+  margin-top: 5px;
+}
+
+
+#cookbookSearch
+{
+  float: right;
+}
+
+#deleteWeightButton
+{
+  /* margin-left: 40px */
+  float: right;
+  
+}
+
+/* #addWeightButton
+{
+  margin-right: 10px
+} */
+
+#totalList
+{
+  margin-bottom: 10px
+}
+
+/* #delFoodButton
+{
+  float: right;
+} */
+
+#userHome:hover {
+  cursor: pointer;
+}
