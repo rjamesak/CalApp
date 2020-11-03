@@ -4,5 +4,5 @@ This is a basic crud app that connects to a mysql database.
 Ability to add data to user table, food table, exercise table, and log tables. 
 Data from tables is displayed.
 
-![Alt text](/public/WelcomeScreen.jpg?raw=true "Optional Title")
+![Alt text](./public/WelcomeScreen.jpg?raw=true "Optional Title")
 
